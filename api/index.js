@@ -8,18 +8,23 @@ const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
 const multer = require("multer");
 const path = require("path");
+const connectDB = require('./db');
 
 dotenv.config();
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
-mongoose
+const PORT = process.env.PORT || 5000;
+const mode = process.env.NODE_ENV;
+connectDB();
+
+  mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify:true
-  })
+  }) 
   .then(console.log("Connected to MongoDB"))
   .catch((err) => console.log(err));
 
